@@ -22,11 +22,9 @@ export async function POST(
 		const { acceptMessages } = await request.json();
 
 		// update user to accept messages
-		const updatedUser = await UserModel.findByIdAndUpdate(
-			userId,
-			{ isAcceptingMessages: acceptMessages },
-			{ new: true }
-		);
+		const updatedUser = await UserModel.findByIdAndUpdate(userId, {
+			isAcceptingMessages: acceptMessages,
+		});
 		if (!updatedUser) {
 			throw new Exception("User not found", 404);
 		}
