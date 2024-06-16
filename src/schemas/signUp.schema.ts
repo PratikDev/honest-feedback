@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const usernameValidation = z
+export const usernameValidation = z
 	.string()
 	.trim()
 	.min(2, "Username must be at least 2 characters long")
@@ -10,8 +10,10 @@ const usernameValidation = z
 		"Username must only contain letters, numbers, and underscores"
 	);
 
-export const signUpSchema = z.object({
+const signUpSchema = z.object({
 	username: usernameValidation,
 	email: z.string().email(),
 	password: z.string().min(8, "Password must be at least 8 characters long"),
 });
+
+export default signUpSchema;

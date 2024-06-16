@@ -18,3 +18,20 @@ export function getEnv(name: keyof EvnVariablesType) {
 	}
 	return value;
 }
+
+export function isMoreThanOneHourPassed(dateObject: Date) {
+	// Get the current time in milliseconds
+	const currentTime = new Date().getTime();
+
+	// Get the time from the date object in milliseconds
+	const dateObjectTime = dateObject.getTime();
+
+	// Calculate the difference in milliseconds
+	const timeDifference = currentTime - dateObjectTime;
+
+	// Convert milliseconds to hours (divide by 1000 for seconds, then 3600 for hours)
+	const hoursPassed = timeDifference / (1000 * 3600);
+
+	// Check if more than 1 hour has passed
+	return hoursPassed > 1;
+}

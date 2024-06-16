@@ -1,5 +1,7 @@
 import { z } from "zod";
 
-export const acceptMessagesSchema = z.object({
+const acceptMessagesSchema = z.object({
 	acceptMessages: z.boolean(),
 });
+
+export default acceptMessagesSchema;
