@@ -21,6 +21,10 @@ export async function POST(
 		const userId = user._id;
 		const { acceptMessages } = await request.json();
 
+		if (typeof acceptMessages !== "boolean") {
+			throw new Exception("Invalid request", 400);
+		}
+
 		// update user to accept messages
 		const updatedUser = await UserModel.findByIdAndUpdate(userId, {
 			isAcceptingMessages: acceptMessages,
