@@ -10,10 +10,11 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Exception } from "@/errors/Expection";
 import signUpSchema, { type signUpSchemaType } from "@/schemas/signUp.schema";
 import { ApiResponse } from "@/types/ApiResponse";
 import { zodResolver } from "@hookform/resolvers/zod";
-import axios, { type AxiosError } from "axios";
+import axios, { isAxiosError } from "axios";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -41,6 +42,7 @@ export default function Page() {
 
 	useEffect(() => {
 		const checkUsername = async () => {
+			// if username is empty, return
 			if (debouncedUsername[0].length <= 0) {
 				setUsernameMessage("");
 				return;
@@ -52,12 +54,15 @@ export default function Page() {
 				const response = await axios.get<ApiResponse>(
 					`/api/auth/check-username-unique?username=${debouncedUsername[0]}`
 				);
-				setUsernameMessage(response.data.message);
+				response.data.success
+					? setUsernameMessage("")
+					: setUsernameMessage(response.data.message);
 			} catch (error) {
-				const axiosError = error as AxiosError<ApiResponse>;
-				setUsernameMessage(
-					axiosError.response?.data?.message || "Error checking username"
-				);
+				let message = "Error checking username";
+				if (isAxiosError<ApiResponse>(error)) {
+					message = error.response?.data?.message || message;
+				}
+				setUsernameMessage(message);
 			} finally {
 				setCheckingUsername(false);
 			}
@@ -67,15 +72,31 @@ export default function Page() {
 
 	const onSubmit = async (data: signUpSchemaType) => {
 		try {
+			// if username is still being checked, return
+			if (checkingUsername) return;
+
+			// if username is not unique, show toast and return
+			if (usernameMessage) {
+				throw new Exception(usernameMessage);
+			}
+
 			const response = await axios.post<ApiResponse>("/api/auth/sign-up", data);
-			toast("Success", {
+			toast.success("Success", {
 				description: response.data.message,
 			});
 			router.push(`/verify/${data.username}`);
 		} catch (error) {
-			const axiosError = error as AxiosError<ApiResponse>;
-			toast.error("Signup failed", {
-				description: axiosError.response?.data?.message || "Error signing up",
+			const title = "Signup failed";
+			let description = "Error signing up";
+
+			if (isAxiosError<ApiResponse>(error)) {
+				description = error.response?.data?.message || description;
+			} else if (error instanceof Exception) {
+				description = error.message;
+			}
+
+			toast.error(title, {
+				description,
 			});
 		}
 	};
@@ -120,9 +141,7 @@ export default function Page() {
 												}}
 											/>
 										</FormControl>
-										<FormMessage variant="success">
-											{usernameMessage}
-										</FormMessage>
+										<FormMessage>{usernameMessage}</FormMessage>
 									</FormItem>
 								)}
 							/>

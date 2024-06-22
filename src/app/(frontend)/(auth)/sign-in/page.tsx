@@ -3,7 +3,7 @@
 import { buttonVariants } from "@/components/ui/button";
 import { signIn, signOut, useSession } from "next-auth/react";
 
-export default function Component() {
+export default function Page() {
 	const { data: session } = useSession();
 	if (session) {
 		return (
