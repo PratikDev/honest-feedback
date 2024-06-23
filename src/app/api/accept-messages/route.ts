@@ -9,9 +9,15 @@ import { NextResponse } from "next/server";
 export async function POST(
 	request: Request
 ): Promise<NextResponse<ApiResponse>> {
-	await dbConnect();
-
 	try {
+		const { acceptMessages } = await request.json();
+		if (typeof acceptMessages !== "boolean") {
+			throw new Exception("Invalid request", 400);
+		}
+
+		// connect to the database
+		await dbConnect();
+
 		const session = await getServerSession(authOptions);
 		const user = session?.user;
 		if (!user) {
@@ -19,11 +25,6 @@ export async function POST(
 		}
 
 		const userId = user._id;
-		const { acceptMessages } = await request.json();
-
-		if (typeof acceptMessages !== "boolean") {
-			throw new Exception("Invalid request", 400);
-		}
 
 		// update user to accept messages
 		const updatedUser = await UserModel.findByIdAndUpdate(userId, {
@@ -54,9 +55,10 @@ export async function POST(
 }
 
 export async function GET(): Promise<NextResponse<ApiResponse>> {
-	await dbConnect();
-
 	try {
+		// connect to the database
+		await dbConnect();
+
 		const session = await getServerSession(authOptions);
 		const user = session?.user;
 		if (!user) {

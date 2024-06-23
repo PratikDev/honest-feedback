@@ -8,13 +8,14 @@ import { NextResponse } from "next/server";
 export async function POST(
 	request: Request
 ): Promise<NextResponse<ApiResponse>> {
-	await dbConnect();
-
 	try {
 		const { verifyCode, identifier } = await request.json();
 		if (!verifyCode || !identifier) {
 			throw new Exception("Code is required", 400);
 		}
+
+		// connect to the database
+		await dbConnect();
 
 		// check if code is valid
 		const user = await UserModel.findOne({

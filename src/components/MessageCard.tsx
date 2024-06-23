@@ -34,9 +34,9 @@ type Props = {
 export default function MessageCard({ message, onMessageDelete }: Props) {
 	const handleDelete = async () => {
 		try {
-			const response = await axios.delete(`/api/messages`, {
+			const response = await axios.delete(`/api/message`, {
 				data: {
-					message_id: message._id,
+					messageId: message._id,
 				},
 			});
 			toast.success("Success", {

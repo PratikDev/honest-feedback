@@ -9,9 +9,10 @@ import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
 export async function GET(): Promise<NextResponse<ApiResponse>> {
-	await dbConnect();
-
 	try {
+		// connect to the database
+		await dbConnect();
+
 		const session = await getServerSession(authOptions);
 		const userSession = session?.user;
 		if (!userSession) {
@@ -73,8 +74,6 @@ export async function GET(): Promise<NextResponse<ApiResponse>> {
 export async function POST(
 	request: Request
 ): Promise<NextResponse<ApiResponse>> {
-	await dbConnect();
-
 	try {
 		const data = await request.json();
 
@@ -85,6 +84,9 @@ export async function POST(
 		}
 
 		const { content, identifier } = schemaResponse.data;
+
+		// connect to the database
+		await dbConnect();
 
 		// set the message to the identifier (username/email)
 		const user = await UserModel.findOne({
@@ -116,6 +118,62 @@ export async function POST(
 		});
 	} catch (error) {
 		let message = "Error sending the message";
+		let status = 500;
+
+		// if error is an instance of Exception, we can get the error message and status code
+		if (error instanceof Exception) {
+			message = error.message;
+			status = error.code;
+		} else {
+			console.error(message, error);
+		}
+
+		return NextResponse.json({ success: false, message }, { status });
+	}
+}
+
+export async function DELETE(
+	request: Request
+): Promise<NextResponse<ApiResponse>> {
+	try {
+		const { messageId } = await request.json();
+		if (!mongoose.isValidObjectId(messageId)) {
+			throw new Exception("Invalid request", 400);
+		}
+
+		// connect to the database
+		await dbConnect();
+
+		const session = await getServerSession(authOptions);
+		const userSession = session?.user;
+		if (!userSession) {
+			throw new Exception("Unauthorized", 401);
+		}
+
+		// delete the message from the user's messages array
+		const user = await UserModel.updateOne(
+			{
+				_id: userSession._id,
+			},
+			{
+				$pull: {
+					messages: {
+						_id: messageId,
+					},
+				},
+			}
+		);
+
+		if (user.modifiedCount === 0) {
+			throw new Exception("Message not found or already deleted", 404);
+		}
+
+		return NextResponse.json({
+			success: true,
+			message: "Message deleted successfully",
+		});
+	} catch (error) {
+		let message = "Error deleting the message";
 		let status = 500;
 
 		// if error is an instance of Exception, we can get the error message and status code

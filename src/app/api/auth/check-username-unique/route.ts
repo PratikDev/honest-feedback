@@ -14,12 +14,8 @@ const UsernameQuerySchema = z.object({
 export async function GET(
 	request: Request
 ): Promise<NextResponse<ApiResponse>> {
-	await dbConnect();
-
 	try {
 		const { searchParams } = new URL(request.url);
-
-		// get the username from the query params
 		const data = {
 			username: searchParams.get("username"),
 		};
@@ -31,6 +27,9 @@ export async function GET(
 		}
 
 		const { username } = schemaResponse.data;
+
+		// connect to the database
+		await dbConnect();
 
 		const existingUserByUsername = await UserModel.findOne({
 			username,

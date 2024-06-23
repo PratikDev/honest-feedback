@@ -11,8 +11,6 @@ import { NextResponse } from "next/server";
 export async function POST(
 	request: Request
 ): Promise<NextResponse<ApiResponse>> {
-	await dbConnect();
-
 	try {
 		const data = await request.json();
 
@@ -23,6 +21,9 @@ export async function POST(
 		}
 
 		const { email, password, username } = schemaResponse.data;
+
+		// connect to the database
+		await dbConnect();
 
 		const existingUserByUsernameOrEmail = await UserModel.findOne({
 			$or: [{ username }, { email }],
