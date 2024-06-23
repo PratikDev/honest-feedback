@@ -2,7 +2,7 @@ import { getToken } from "next-auth/jwt";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
-const AUTH_ROUTES = ["/", "/sign-in", "/sign-up", "/verify"];
+const AUTH_ROUTES = ["/sign-in", "/sign-up", "/verify"];
 const PROTECTED_ROUTES = ["/dashboard"];
 
 // This function can be marked `async` if using `await` inside
