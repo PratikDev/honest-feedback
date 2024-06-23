@@ -1,7 +1,9 @@
+import MessageCard from "@/components/MessageCard";
+
 export default function Page() {
 	return (
-		<div>
-			<h1>Dashboard</h1>
+		<div className="p-6 grid grid-cols-4">
+			<MessageCard />
 		</div>
 	);
 }

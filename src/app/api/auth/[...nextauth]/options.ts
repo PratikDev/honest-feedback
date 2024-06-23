@@ -52,11 +52,7 @@ const authOptions: NextAuthOptions = {
 						throw new Error("Incorrect credentials");
 					}
 
-					return {
-						...user,
-						id: user._id.toString(),
-						_id: user._id.toString(),
-					};
+					return user as any;
 				} catch (error) {
 					throw new Error((error as Error).message);
 				}
