@@ -64,8 +64,8 @@ export default function Page({ params: { username } }: Params) {
 	};
 
 	return (
-		<div className="flex justify-center items-center min-h-screen bg-gray-100">
-			<div className="w-full max-w-md p-8 space-y-8 rounded-lg bg-white shadow-md">
+		<div className="flex justify-center items-center min-h-screen bg-background">
+			<div className="w-full max-w-md p-8 space-y-8 rounded-lg bg-muted shadow-md">
 				<div className="text-center">
 					<h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6">
 						Verify your account
@@ -91,13 +91,13 @@ export default function Page({ params: { username } }: Params) {
 											maxLength={6}
 											{...field}
 										>
-											<InputOTPGroup>
+											<InputOTPGroup className="*:border-primary">
 												<InputOTPSlot index={0} />
 												<InputOTPSlot index={1} />
 												<InputOTPSlot index={2} />
 											</InputOTPGroup>
 											<InputOTPSeparator />
-											<InputOTPGroup>
+											<InputOTPGroup className="*:border-primary">
 												<InputOTPSlot index={3} />
 												<InputOTPSlot index={4} />
 												<InputOTPSlot index={5} />
@@ -105,7 +105,7 @@ export default function Page({ params: { username } }: Params) {
 										</InputOTP>
 									</FormControl>
 									<FormDescription>
-										Please enter the one-time password sent to your email.
+										Please enter the 6 digit code sent to your email.
 									</FormDescription>
 									<FormMessage />
 								</FormItem>
