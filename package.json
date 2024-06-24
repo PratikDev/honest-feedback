@@ -23,7 +23,7 @@
     "embla-carousel-autoplay": "^8.1.5",
     "embla-carousel-react": "^8.1.5",
     "input-otp": "^1.2.4",
-    "lucide-react": "^0.394.0",
+    "lucide-react": "^0.396.0",
     "mongoose": "^8.4.1",
     "next": "14.2.3",
     "next-auth": "^4.24.7",
