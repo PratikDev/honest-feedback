@@ -46,13 +46,9 @@ export async function GET(): Promise<NextResponse<ApiResponse>> {
 			},
 		]);
 
-		if (!user || user.length === 0) {
-			throw new Exception("User not found", 404);
-		}
-
 		return NextResponse.json({
 			success: true,
-			messages: user[0].messages,
+			messages: user.length ? user[0].messages : [],
 			message: "Messages retrieved successfully",
 		});
 	} catch (error) {
