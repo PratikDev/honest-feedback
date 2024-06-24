@@ -25,7 +25,7 @@ export default function VerificationEmail({
 			<Head>
 				<title>Verification Code</title>
 			</Head>
-			<Preview>Here's your verification code: {otp}</Preview>
+			<Preview>Here&apos;s your verification code: {otp}</Preview>
 			<Section>
 				<Row>
 					<Heading as="h2">Hello {username},</Heading>
@@ -41,7 +41,7 @@ export default function VerificationEmail({
 				</Row>
 				<Row>
 					<Text>
-						If you didn't request this code, please ignore this email.
+						If you didn&apos;t request this code, please ignore this email.
 					</Text>
 				</Row>
 			</Section>

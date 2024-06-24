@@ -111,7 +111,7 @@ export default function Page() {
 
 				<div className="text-center mt-4">
 					<p>
-						Don't have an account yet?{" "}
+						Don&apos;t have an account yet?{" "}
 						<Link
 							href="/sign-up"
 							className="text-blue-600 hover:underline"

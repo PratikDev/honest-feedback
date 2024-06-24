@@ -100,9 +100,10 @@ export default function Page() {
 	};
 
 	useEffect(() => {
-		if (!session?.user) return;
+		if (!username) return;
+
 		fetchMessages();
-	}, [fetchMessages, session?.user.id]);
+	}, [fetchMessages, username]);
 
 	if (!session?.user) {
 		return <>Please Login</>;

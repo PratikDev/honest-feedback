@@ -29,7 +29,7 @@ export default function Page() {
 	const [username, setUsername] = useState("");
 	const [checkingUsername, setCheckingUsername] = useState(false);
 	const [usernameMessage, setUsernameMessage] = useState("");
-	const debouncedUsername = useDebounceValue(username, 500);
+	const [debouncedUsername] = useDebounceValue(username, 500);
 
 	const form = useForm<signUpSchemaType>({
 		resolver: zodResolver(signUpSchema),
@@ -43,7 +43,7 @@ export default function Page() {
 	useEffect(() => {
 		const checkUsername = async () => {
 			// if username is empty, return
-			if (debouncedUsername[0].length <= 0) {
+			if (debouncedUsername.length <= 0) {
 				setUsernameMessage("");
 				return;
 			}
@@ -52,7 +52,7 @@ export default function Page() {
 				setCheckingUsername(true);
 				setUsernameMessage("");
 				const response = await axios.get<ApiResponse>(
-					`/api/auth/check-username-unique?username=${debouncedUsername[0]}`
+					`/api/auth/check-username-unique?username=${debouncedUsername}`
 				);
 				response.data.success
 					? setUsernameMessage("")
@@ -68,7 +68,7 @@ export default function Page() {
 			}
 		};
 		checkUsername();
-	}, [debouncedUsername[0]]);
+	}, [debouncedUsername]);
 
 	const onSubmit = async (data: signUpSchemaType) => {
 		try {
