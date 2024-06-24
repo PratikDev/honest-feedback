@@ -1,3 +1,4 @@
+import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { Toaster } from "@/components/ui/sonner";
 import AuthProvider from "@/contexts/AuthProvider";
 import type { Metadata } from "next";
@@ -20,8 +21,14 @@ export default function RootLayout({
 		<html lang="en">
 			<AuthProvider>
 				<body className={inter.className}>
-					{children}
-					<Toaster />
+					<ThemeProvider
+						attribute="class"
+						defaultTheme="system"
+						enableSystem
+					>
+						{children}
+						<Toaster />
+					</ThemeProvider>
 				</body>
 			</AuthProvider>
 		</html>

@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { LogIn, LogOut, User } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
+import ThemeToggle from "./theme/ThemeToggle";
 
 export default function Navbar() {
 	const { status } = useSession();
@@ -32,8 +33,9 @@ export default function Navbar() {
 						)}
 					>
 						<span className="sr-only">Github</span>
-						<Github className="w-5 h-5" />
+						<Github className="w-5 h-5 dark:fill-white" />
 					</Link>
+
 					<Link
 						href={`https://x.com/pratik_and_dev`}
 						target="_blank"
@@ -44,8 +46,9 @@ export default function Navbar() {
 						)}
 					>
 						<span className="sr-only">X (formerly Twitter)</span>
-						<XTwitter className="w-4 h-4" />
+						<XTwitter className="w-4 h-4 dark:fill-white" />
 					</Link>
+
 					<Link
 						href={`/dashboard`}
 						title="Dashboard"
@@ -55,8 +58,11 @@ export default function Navbar() {
 						)}
 					>
 						<span className="sr-only">Dashboard</span>
-						<User className="w-4 h-4" />
+						<User className="w-5 h-5" />
 					</Link>
+
+					<ThemeToggle />
+
 					{status === "authenticated" ? (
 						<Button
 							type="button"

@@ -36,7 +36,7 @@ export default function Home() {
 							<CarouselItem key={index}>
 								<Card className="p-1">
 									<CardContent className="flex flex-col gap-y-2 p-6 justify-center overflow-hidden">
-										<span className="text-2xl font-semibold h-24 line-clamp-3 overflow-hidden">
+										<span className="text-lg md:text-2xl font-semibold h-20 md:h-24 line-clamp-3 overflow-hidden">
 											{message.content}
 										</span>
 										<small className="text-muted-foreground">

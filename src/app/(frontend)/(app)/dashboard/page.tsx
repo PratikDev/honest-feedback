@@ -28,7 +28,7 @@ export default function Page() {
 
 	const { data: session } = useSession();
 	const username = session?.user?.username;
-	const profileUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/u/${username}`;
+	const profileUrl = `${process.env.VERCEL_PROJECT_PRODUCTION_URL}/u/${username}`;
 
 	const form = useForm<AcceptMessagesSchemaType>({
 		resolver: zodResolver(acceptMessagesSchema),
@@ -102,14 +102,14 @@ export default function Page() {
 	useEffect(() => {
 		if (!session?.user) return;
 		fetchMessages();
-	}, [session, fetchMessages]);
+	}, [fetchMessages, session?.user.id]);
 
 	if (!session?.user) {
 		return <>Please Login</>;
 	}
 
 	return (
-		<div className="my-8 mx-4 md:mx-8 lg:mx-auto p-6 bg-white rounded w-full max-w-6xl">
+		<div className="my-8 mx-auto p-6 bg-background rounded w-full max-w-6xl">
 			<h1 className="text-4xl font-bold mb-4">User Dashboard</h1>
 
 			<div className="mb-4">
