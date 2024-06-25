@@ -63,7 +63,7 @@ export default function Page() {
 
 	const handleDeleteMessage = (message_id: string) => {
 		setMessages((prevMessages) =>
-			prevMessages.filter((message) => message.id !== message_id)
+			prevMessages.filter((message) => message._id !== message_id)
 		);
 	};
 

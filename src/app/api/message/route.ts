@@ -101,7 +101,6 @@ export async function POST(
 
 		const newMessage = {
 			content,
-			createdAt: new Date(),
 		};
 
 		// add the message to the user's messages array

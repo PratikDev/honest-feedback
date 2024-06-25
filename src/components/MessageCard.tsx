@@ -11,14 +11,7 @@ import {
 	AlertDialogTitle,
 	AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Exception } from "@/errors/Expection";
 import { cn } from "@/lib/utils";
 import { type Message } from "@/models/User.model";
@@ -59,18 +52,27 @@ export default function MessageCard({ message, onMessageDelete }: Props) {
 		}
 	};
 
+	const formattedDate = (date: string | Date) => {
+		const dateObj = new Date(date);
+		return dateObj.toLocaleString("en", {
+			year: "numeric",
+			month: "short",
+			day: "2-digit",
+			hour: "2-digit",
+			minute: "2-digit",
+			hour12: false,
+		});
+	};
+
 	return (
-		<Card className="p-6 *:px-0 first:pt-0">
-			<CardHeader>
-				<CardTitle>Card Title</CardTitle>
-				<CardDescription>Card Description</CardDescription>
-			</CardHeader>
-			<CardContent>
-				<p>Card Content</p>
+		<Card className="p-6">
+			<CardContent className="flex flex-col px-0 gap-y-2 justify-center">
+				<span className="text-lg font-semibold">{message.content}</span>
+				<small className="text-muted-foreground">
+					{formattedDate(message.createdAt)}
+				</small>
 			</CardContent>
-			<CardFooter>
-				<p>Card Footer</p>
-			</CardFooter>
+
 			<AlertDialog>
 				<AlertDialogTrigger
 					className={cn(buttonVariants({ variant: "outline" }), "w-full")}
