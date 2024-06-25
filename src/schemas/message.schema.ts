@@ -11,5 +11,7 @@ const messageSchema = z.object({
 		.trim()
 		.min(2, "Username must be at least 2 characters long"),
 });
+type messageSchemaType = z.infer<typeof messageSchema>;
 
 export default messageSchema;
+export type { messageSchemaType };

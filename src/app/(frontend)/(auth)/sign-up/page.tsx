@@ -40,36 +40,6 @@ export default function Page() {
 		},
 	});
 
-	useEffect(() => {
-		const checkUsername = async () => {
-			// if username is empty, return
-			if (debouncedUsername.length <= 0) {
-				setUsernameMessage("");
-				return;
-			}
-
-			try {
-				setCheckingUsername(true);
-				setUsernameMessage("");
-				const response = await axios.get<ApiResponse>(
-					`/api/auth/check-username-unique?username=${debouncedUsername}`
-				);
-				response.data.success
-					? setUsernameMessage("")
-					: setUsernameMessage(response.data.message);
-			} catch (error) {
-				let message = "Error checking username";
-				if (isAxiosError<ApiResponse>(error)) {
-					message = error.response?.data?.message || message;
-				}
-				setUsernameMessage(message);
-			} finally {
-				setCheckingUsername(false);
-			}
-		};
-		checkUsername();
-	}, [debouncedUsername]);
-
 	const onSubmit = async (data: signUpSchemaType) => {
 		try {
 			// if username is still being checked, return
@@ -100,6 +70,36 @@ export default function Page() {
 			});
 		}
 	};
+
+	useEffect(() => {
+		const checkUsername = async () => {
+			// if username is empty, return
+			if (debouncedUsername.length <= 0) {
+				setUsernameMessage("");
+				return;
+			}
+
+			try {
+				setCheckingUsername(true);
+				setUsernameMessage("");
+				const response = await axios.get<ApiResponse>(
+					`/api/auth/check-username-unique?username=${debouncedUsername}`
+				);
+				response.data.success
+					? setUsernameMessage("")
+					: setUsernameMessage(response.data.message);
+			} catch (error) {
+				let message = "Error checking username";
+				if (isAxiosError<ApiResponse>(error)) {
+					message = error.response?.data?.message || message;
+				}
+				setUsernameMessage(message);
+			} finally {
+				setCheckingUsername(false);
+			}
+		};
+		checkUsername();
+	}, [debouncedUsername]);
 
 	return (
 		<div className="flex justify-center items-center min-h-screen bg-background">

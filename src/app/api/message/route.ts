@@ -25,7 +25,7 @@ export async function GET(): Promise<NextResponse<ApiResponse>> {
 		const user = await UserModel.aggregate([
 			{
 				$match: {
-					id: userId,
+					_id: userId,
 				},
 			},
 			{

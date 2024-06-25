@@ -49,17 +49,19 @@ export default function Navbar() {
 						<XTwitter className="w-4 h-4 dark:fill-white" />
 					</Link>
 
-					<Link
-						href={`/dashboard`}
-						title="Dashboard"
-						className={cn(
-							buttonVariants({ size: "sm", variant: "ghost" }),
-							"p-2 h-auto"
-						)}
-					>
-						<span className="sr-only">Dashboard</span>
-						<User className="w-5 h-5" />
-					</Link>
+					{status === "authenticated" && (
+						<Link
+							href={`/dashboard`}
+							title="Dashboard"
+							className={cn(
+								buttonVariants({ size: "sm", variant: "ghost" }),
+								"p-2 h-auto"
+							)}
+						>
+							<span className="sr-only">Dashboard</span>
+							<User className="w-5 h-5" />
+						</Link>
+					)}
 
 					<ThemeToggle />
 
@@ -76,9 +78,12 @@ export default function Navbar() {
 					) : (
 						<Link
 							href={`/sign-in`}
-							className={cn(buttonVariants({ size: "sm" }), "space-x-1")}
+							className={cn(
+								buttonVariants({ size: "sm" }),
+								"flex gap-x-1 items-center px-2 md:px-3 h-8 md:h-9"
+							)}
 						>
-							<span>Sign In</span>
+							<span className="hidden md:block">Sign In</span>
 							<LogIn className="w-4 h-4" />
 						</Link>
 					)}
