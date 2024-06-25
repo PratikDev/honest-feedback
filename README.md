@@ -1,3 +1,3 @@
 # Honest Feedback
 
-![Demonstration of the APIs](./HonestFeedback.pdf?raw=true)
+![Demonstration of the APIs](https://github.com/pratikdev/honest-feedback/blob/readme-pdf/HonestFeedback.pdf?raw=true)
