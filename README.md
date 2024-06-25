@@ -1,3 +1,3 @@
 # Honest Feedback
 
-![Demonstration of the APIs](./HonestFeedback.pdf)
+![Demonstration of the APIs](./HonestFeedback.pdf?raw=true)
