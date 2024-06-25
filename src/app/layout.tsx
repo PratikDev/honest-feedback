@@ -9,7 +9,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
 	title: "Honest Feedback",
-	description: "Give and receive honest feedbacks anonymously.",
+	description: "Give and receive honest feedbacks anonymously",
 };
 
 export default function RootLayout({
