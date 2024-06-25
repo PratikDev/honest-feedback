@@ -10,6 +10,14 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
 	title: "Honest Feedback",
 	description: "Give and receive honest feedbacks anonymously",
+	metadataBase: new URL(`https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`),
+	openGraph: {
+		title: "Honest Feedback",
+		description: "Give and receive honest feedbacks anonymously",
+		siteName: "HonestFeedback",
+		url: `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`,
+		authors: ["@pratikdev"],
+	},
 };
 
 export default function RootLayout({

@@ -28,7 +28,7 @@ export default function Page() {
 
 	const { data: session } = useSession();
 	const username = session?.user?.username;
-	const profileUrl = `${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}/u/${username}`;
+	const profileUrl = `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}/u/${username}`;
 
 	const form = useForm<AcceptMessagesSchemaType>({
 		resolver: zodResolver(acceptMessagesSchema),
